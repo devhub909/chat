@@ -5,7 +5,7 @@
 [![Packagist](https://img.shields.io/packagist/v/musonza/chat.svg)](https://packagist.org/packages/musonza/chat)
 <a href="https://codeclimate.com/github/musonza/chat/maintainability"><img src="https://api.codeclimate.com/v1/badges/85f152eae2a04b25783d/maintainability" /></a>
 ## Chat
-
+TEST CHANGE
 Create a Chat application for your multiple Models
 
 **********************************************************
