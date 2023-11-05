@@ -62,6 +62,13 @@ class ChatServiceProvider extends ServiceProvider
         $target = $this->app->databasePath().'/migrations/'.$timestamp.'_create_chat_tables.php';
 
         $this->publishes([$stub => $target], 'chat.migrations');
+
+        $timestamp = date('Y_m_d_His', time());
+        $stub = __DIR__.'/../database/migrations/change_msgs_table.php';
+        $target = $this->app->databasePath().'/migrations/'.$timestamp.'_change_msgs_table.php';
+
+        $this->publishes([$stub => $target], 'chat.migrations');
+
     }
 
     /**

@@ -14,6 +14,14 @@ class MessageService
 
     protected $type = 'text';
     protected $data = [];
+    protected $delivered_ts_int = null;
+    protected $delivered_ts = null;
+    protected $is_outgoing = 0;
+    protected $is_need_send = 0;
+    protected $is_send_success = 0;
+
+
+
     protected $body;
     /**
      * @var CommandBus
@@ -58,6 +66,41 @@ class MessageService
     public function data(array $data)
     {
         $this->data = $data;
+
+        return $this;
+    }
+
+    public function set_is_outgoing(int $val)
+    {
+        $this->is_outgoing = $val;
+
+        return $this;
+    }
+
+
+    public function set_is_need_send(int $val)
+    {
+        $this->is_need_send = $val;
+
+        return $this;
+    }
+
+
+    public function set_is_send_success(int $val)
+    {
+        $this->is_send_success = $val;
+
+        return $this;
+    }
+
+
+
+    public function delivered_ts_int(int $delivered_ts_int)
+    {
+        $this->delivered_ts_int = $delivered_ts_int;
+        $ts = date('Y-m-d h:i:s', floor($delivered_ts_int / 1000));
+
+        $this->delivered_ts = $ts;
 
         return $this;
     }
@@ -128,7 +171,13 @@ class MessageService
             throw new Exception('Message receiver has not been set');
         }
 
-        $command = new SendMessageCommand($this->recipient, $this->body, $this->sender, $this->type, $this->data);
+
+
+
+
+
+        $command = new SendMessageCommand($this->recipient, $this->body, $this->sender, $this->type, $this->data,
+           $this->delivered_ts_int,$this->is_outgoing,$this->is_need_send,$this->is_send_success, $this->delivered_ts);
 
         return $this->commandBus->execute($command);
     }

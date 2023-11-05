@@ -19,6 +19,11 @@ class Message extends BaseModel
         'participation_id',
         'type',
         'data',
+        'delivered_ts_int',
+        'delivered_ts',
+        'is_outgoing',
+        'is_need_send',
+        'is_send_success',
     ];
 
     protected $table = ConfigurationManager::MESSAGES_TABLE;
@@ -86,13 +91,18 @@ class Message extends BaseModel
      *
      * @return Model
      */
-    public function send(Conversation $conversation, string $body, Participation $participant, string $type = 'text', array $data = []): Model
+    public function send(Conversation $conversation, string $body, Participation $participant, string $type = 'text', array $data = [],
+                         $delivered_ts_int,$is_outgoing,$is_need_send,$is_send_success, $delivered_ts): Model
     {
         $message = $conversation->messages()->create([
             'body'             => $body,
             'participation_id' => $participant->getKey(),
             'type'             => $type,
-            'data'             => $data,
+            'delivered_ts_int' => $delivered_ts_int,
+            'delivered_ts' => $delivered_ts,
+            'is_outgoing'    => $is_outgoing,
+            'is_need_send'   => $is_need_send,
+            'is_send_success' => $is_send_success,
         ]);
 
         if (Chat::broadcasts()) {
